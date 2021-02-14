@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.appwithbottomnav.fragments.DashboardFragment;
+import com.example.appwithbottomnav.fragments.HomeFragment;
+import com.example.appwithbottomnav.fragments.NotificationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayDeque;
