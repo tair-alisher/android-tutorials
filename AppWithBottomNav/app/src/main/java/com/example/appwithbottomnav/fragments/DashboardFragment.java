@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class DashboardFragment extends Fragment {
+    SwipeRefreshLayout swipeRefreshLayout;
+
     RecyclerView recyclerView;
     ArrayList<DashboardMainData> dataArrayList = new ArrayList<DashboardMainData>();
     DashboardAdapter adapter;
@@ -40,10 +43,12 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        recyclerView = view.findViewById(R.id.db_recyclerView);
+        swipeRefreshLayout = view.findViewById(R.id.db_swipe_container);
 
         setUpRecyclerView(view);
         getData();
+
+        swipeRefreshLayout.setOnRefreshListener(this::getData);
 
         return view;
     }
@@ -76,6 +81,7 @@ public class DashboardFragment extends Fragment {
                     try {
                         JSONArray jsonArray = new JSONArray(response.body());
                         parseArray(jsonArray);
+                        swipeRefreshLayout.setRefreshing(false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
